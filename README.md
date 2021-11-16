@@ -11,3 +11,6 @@
 1. Criar um commit
    1. Colocar mensagem (obrigatorio)
    1. Colocar um descrição
+1. Push pro github
+1. Cria um PR (pull request)
+1. Espera validação
