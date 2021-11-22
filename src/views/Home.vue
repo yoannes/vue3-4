@@ -1,18 +1,33 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+{{list}}
+  <comp :car="list[0]" />
+  <comp :car="list[1]" />
+  <comp :car="list[2]" />
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import Comp from "../components/Comp.vue";
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld,
+  components: { Comp },
+  name: "Home",
+
+  setup() {
+    const list = [
+      { brand: "BMW", model: "M3" },
+      { brand: "Audi", model: "A3" },
+      { brand: "Mercedes", model: "C300" },
+    ];
+
+    const clickHandler = () => {
+      console.log("sou o pai e recebi esse evento");
+    };
+
+    return {
+      clickHandler,
+      list,
+    };
   },
+
 };
 </script>
