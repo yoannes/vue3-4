@@ -1,29 +1,22 @@
 <template>
-  <div @click="$emit('on-click')" class="c">
-    <span>
-      {{ car.brand }}
-    </span>
-    <span>
-      {{ car.model }}
-    </span>
+  <div class="c">
+
+    {{clicked}}
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
+import useCars from "@/modules/cars";
+
 export default {
-  props: {
-    car: { type: Object, default: null },
-    brand: { type: String, default: "" },
-    model: { type: String, default: "" },
-  },
+  setup() {
+    const cars = useCars();
 
-  setup(props) {
-    const clickHandler = () => {
-      console.log("hey", props.color);
-    };
-
+    const clicked = computed(() => cars.state.clicked);
+    console.log("[]...", cars);
     return {
-      clickHandler,
+      clicked,
     };
   },
 };

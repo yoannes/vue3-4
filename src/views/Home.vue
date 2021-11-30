@@ -1,33 +1,41 @@
 <template>
-{{list}}
-  <comp :car="list[0]" />
-  <comp :car="list[1]" />
-  <comp :car="list[2]" />
+  <div>
+    <div v-for="c in list" :key="c.model">
+      <div @click="clickHandler(c)">{{c.brand}}</div>
+    </div>
+
+    <div style="margin-top: 10px">
+      <comp />
+    </div>
+
+  </div>
 </template>
 
 <script>
-import Comp from "../components/Comp.vue";
+import { computed } from "vue";
+import useCars from "@/modules/cars";
+import Comp from "@/components/Comp.vue";
 
 export default {
-  components: { Comp },
-  name: "Home",
-
-  setup() {
-    const list = [
-      { brand: "BMW", model: "M3" },
-      { brand: "Audi", model: "A3" },
-      { brand: "Mercedes", model: "C300" },
-    ];
-
-    const clickHandler = () => {
-      console.log("sou o pai e recebi esse evento");
-    };
-
-    return {
-      clickHandler,
-      list,
-    };
+  components: {
+    Comp,
   },
 
+  setup() {
+    const cars = useCars();
+
+    const list = computed(() => cars.state.list);
+
+    const clickHandler = (car) => {
+      cars.mutations.setClicked(car);
+    };
+
+    console.log("[]...", cars);
+
+    return {
+      list,
+      clickHandler,
+    };
+  },
 };
 </script>
