@@ -3,10 +3,9 @@ import { reactive, readonly } from "vue";
 const state = reactive({
   clicked: null,
   list: [
-    { brand: "BMW", model: "M3" },
-    { brand: "Audi", model: "A3" },
-    { brand: "Mercedes", model: "C300" },
-
+    { id: 1, brand: "BMW", model: "M3" },
+    { id: 2, brand: "Audi", model: "A3" },
+    { id: 3, brand: "Mercedes", model: "C300" },
   ],
 });
 
