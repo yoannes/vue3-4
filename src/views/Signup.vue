@@ -54,11 +54,15 @@
 
 <script>
 import { reactive, toRefs } from "vue";
+import { useRouter } from "vue-router";
+import useAuth from "@/modules/auth";
 
 export default {
   components: {},
 
   setup() {
+    const router = useRouter();
+    const auth = useAuth();
     const state = reactive({
       name: "",
       user: "",
@@ -146,6 +150,10 @@ export default {
         signupHandler();
       }
     };
+
+    if (auth.state.token) {
+      router.push({ name: "Home" });
+    }
 
     return {
       ...toRefs(state),

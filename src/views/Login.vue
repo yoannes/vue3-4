@@ -31,11 +31,15 @@
 
 <script>
 import { reactive, toRefs } from "vue";
+import { useRouter } from "vue-router";
+import useAuth from "@/modules/auth";
 
 export default {
   components: {},
 
   setup() {
+    const router = useRouter();
+    const auth = useAuth();
     const state = reactive({
       user: "",
       pwd: "",
@@ -66,10 +70,22 @@ export default {
       return true;
     };
 
-    const loginHandler = () => {
+    const loginHandler = async () => {
       if (!validate()) return;
 
-      console.log("Login");
+      const res = await auth.login(state.user, state.pwd);
+
+      if (res === "WRONG_USER") {
+        state.errorField = "User";
+        state.errorMsg = "Usuário não encontrado";
+        state.userEl.focus();
+      } else if (res === "WRONG_PWD") {
+        state.errorField = "Pwd";
+        state.errorMsg = "Senha incorreta";
+        state.pwdEl.focus();
+      }
+
+      console.log("Login", res);
     };
 
     const userKeyupHandler = (e) => {
@@ -90,6 +106,10 @@ export default {
         loginHandler();
       }
     };
+
+    if (auth.state.token) {
+      router.push({ name: "Home" });
+    }
 
     return {
       ...toRefs(state),
